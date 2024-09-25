@@ -1,0 +1,34 @@
+.deleteBtn{
+    background-color: rgb(246, 133, 133);
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 5px;
+    height: 30px;
+}
+.saveBtn{
+    background-color: rgb(177, 250, 177);
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.imgBtn{
+    width: 20px;
+    height: 20px;
+}
+
+.inputWords{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 40px;
+    gap: 10px;
+    margin-top: 10px;
+}
+.allButtons {
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+
+}

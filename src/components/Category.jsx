@@ -1,16 +1,36 @@
-import React from 'react'
-function Category() {
-    return(
+import React, { useEffect, useState } from 'react';
+import styles from './category.module.css'
+
+function Category({ onFilter }) {
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+        const fetchTags = async () => {
+            try {
+                const response = await fetch('https://itgirlschool.justmakeit.ru/api/words');
+                const data = await response.json();
+                const uniqueTags = data.map(item => item.tags).filter((value, index, self) => self.indexOf(value) === index);
+                setTags(uniqueTags);
+            } catch (error) {
+                console.error('Ошибка при получении данных:', error);
+            }
+        };
+
+        fetchTags();
+    }, []);
+
+    return (
         <div className="category--choose">
             <h3 className='categoryChoose'>Выбери категорию</h3>
-            <button type='button'>Животные</button>
-            <button type='button'>Еда</button>
-            <button type='button'>Вещи</button>
-            <button type='button'>Люди</button>
-            <button type='button'>Путешествия</button>
-            <button type='button'>Погода</button>
-            <button type='button'>Привествие</button>
+            <div className='buttonRow'>
+                {tags.map((tag, index) => (
+                    <button key={index} className={styles.button} onClick={() => onFilter(tag)}>
+                        {tag}
+                    </button>
+                ))}
+            </div>
         </div>
-    )
+    );
 }
+
 export default Category;

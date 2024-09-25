@@ -1,0 +1,20 @@
+.button {
+    background-color: rgb(220, 171, 48);
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.button:hover {
+    background-color: darkgoldenrod;
+}
+.buttonRow{
+    display: flex;
+    flex-direction: row;
+    row-gap: 20px;
+    column-gap: 20px;
+    justify-content: space-between;
+}

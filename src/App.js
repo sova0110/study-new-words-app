@@ -1,17 +1,17 @@
-import React from 'react'
+import React from 'react';
 import './App.css';
 import Header from './components/Header'
 import WordsList from './components/WordsList'
-import Languages from './components/Languages';
-import Category from './components/Category';
 import Footer from './components/Footer';
+import RandomWord from './components/RandomWord';
+
 
 function App() {
+
   return (
     <div className="App">
       <Header/>
-      <Languages/>
-      <Category/>
+      <RandomWord/>
       <WordsList/>
       <Footer/>
     </div>

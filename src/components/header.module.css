@@ -1,0 +1,36 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    background-color: rgb(251, 248, 229);
+    font-size: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+img{
+    height: 50px;
+    width: 50px;
+}
+.logoImg{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    font-size: 20px;
+    color: darkgoldenrod;
+    font-weight: 500;
+}
+
+.Login, .Logout, .Signup {
+    background-color: darkgoldenrod;
+    color:white;
+    cursor: pointer;
+    font-size: 16px;
+    width: 110px;
+    height: 40px;
+    border-radius: 15px;
+}
+
+.button:hover {
+    background-color: rgb(192, 192, 192);
+    color:darkgoldenrod;
+}
