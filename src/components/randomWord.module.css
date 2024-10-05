@@ -1,4 +1,22 @@
-.wordTable {
+.randomWordTable {
     display: flex;
     flex-direction: column;
+    border:none;
+    gap:0;
+}
+.wordTitleR, .wordTextR, .wordTranscR, .wordCategoryR, .allButtons {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    border:none;
+
+}
+.wordWithoutBorder {
+    border: none;
+}
+.handleCheck{
+    background-color: greenyellow;
+    border-radius: 10px;
+    height: 40px;
+    color:rgb(77, 59, 13);
 }

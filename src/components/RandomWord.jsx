@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Word from './Word';
-import styles from './randomWord.module.css'
+import styles from './randomWord.module.css';
 
 function RandomWord() {
     const [randomWord, setRandomWord] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const [showRussian, setShowRussian] = useState(false); // Состояние для отображения русского слова
 
     useEffect(() => {
         const fetchRandomWord = async () => {
@@ -24,27 +24,38 @@ function RandomWord() {
         fetchRandomWord();
     }, []);
 
+    const handleCheck = () => {
+        setShowRussian(true); // Показать русское слово при клике на кнопку
+    };
+
     if (loading) {
         return <div>Груууузим</div>;
     }
 
     return (
-        <div className={styles.wordTable}>
+        <div className={styles.randomWordContainer}>
             <p>Слово дня!</p>
             <p>New day - new word</p>
             {randomWord && (
-    <Word 
-        key={randomWord.id} 
-        english={randomWord.english} 
-        russian={randomWord.russian} 
-        transcription={randomWord.transcription} 
-        tags={randomWord.tags} 
-        showButtons={false}  
-    />
-)}
+                <div className='wordCard'>
+                <Word 
+                    key={randomWord.id} 
+                    english={randomWord.english} 
+                    russian={showRussian ? randomWord.russian : (
+                        <button onClick={handleCheck} className={styles.handleCheck}>Проверить</button>
+                    )} 
+                    transcription={<span className={styles.wordTranscR}>{randomWord.transcription}</span>} 
+                    tags={randomWord.tags} 
+                    showButtons={false}  
+                    customClass={styles.randomWordTable} 
+                    noBorder={true} 
+                />
+                </div>
+            )}
             <p>Запомни его!</p>
         </div>
     );
 }
 
-export default RandomWord
+export default RandomWord;
+

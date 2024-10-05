@@ -17,6 +17,15 @@
     margin-left: 5px;
     border-radius: 5px;
     height: 30px;
+    width: 40px;
+}
+.canceleBtn{
+    background-color: rgb(231, 175, 175);
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 5px;
+    height: 30px;
+    width: 40px;
 }
 .imgBtn{
     width: 20px;

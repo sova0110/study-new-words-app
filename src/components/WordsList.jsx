@@ -9,6 +9,8 @@ function WordsList() {
     const [words, setWords] = useState([]);
     const [filteredWords, setFilteredWords] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [editingWordId, setEditingWordId] = useState(null);
+    const [editedWord, setEditedWord] = useState({});
 
     useEffect(() => {
         const fetchWords = async () => {
@@ -18,7 +20,7 @@ function WordsList() {
                 setWords(data);
                 setFilteredWords(data);
             } catch (error) {
-                console.error('не возоможно отобразить слово:', error);
+                console.error('не возможно отобразить слово:', error);
             }
         };
 
@@ -31,7 +33,28 @@ function WordsList() {
     };
 
     const wordEdit = (id) => {
-        console.log('здесь должен быть функционал по редактированию:', id);
+        const wordToEdit = words.find(word => word.id === id);
+        setEditedWord(wordToEdit);
+        setEditingWordId(id);
+    };
+
+    const handleSave = () => {
+        const updatedWords = words.map(word => 
+            word.id === editingWordId ? { ...word, ...editedWord } : word
+        );
+        setWords(updatedWords);
+        setFilteredWords(updatedWords); // Обновляем также отфильтрованные слова
+        setEditingWordId(null); // Сбросить состояние редактирования
+    };
+
+    const handleCancel = () => {
+        setEditingWordId(null);
+        setEditedWord({});
+    };
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setEditedWord(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSearchChange = (event) => {
@@ -54,12 +77,17 @@ function WordsList() {
                 {filteredWords.map(word => (
                     <Word 
                         key={word.id} 
-                        english={word.english} 
-                        russian={word.russian} 
-                        transcription={word.transcription} 
-                        tags={word.tags} 
-                        showButtons={true}/>
-                         
+                        english={editingWordId === word.id ? editedWord.english : word.english} 
+                        russian={editingWordId === word.id ? editedWord.russian : word.russian} 
+                        transcription={editingWordId === word.id ? editedWord.transcription : word.transcription} 
+                        tags={editingWordId === word.id ? editedWord.tags : word.tags} 
+                        showButtons={true}
+                        editBtn={() => wordEdit(word.id)}
+                        saveBtn={handleSave}
+                        cancelBtn={handleCancel}
+                        handleInputChange={handleInputChange}
+                        isEditing={editingWordId === word.id}
+                    />
                 ))}
             </div>
         </div>
@@ -67,3 +95,4 @@ function WordsList() {
 }
 
 export default WordsList;
+
