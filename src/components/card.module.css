@@ -1,0 +1,9 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 220px;
+    border: solid 3px goldenrod;
+    border-radius: 20px;
+    background-color: rgb(246, 233, 201);
+}

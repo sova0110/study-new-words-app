@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header'
-import WordsList from './components/WordsList'
+import Header from './components/Header';
+import WordsList from './components/WordsList';
 import Footer from './components/Footer';
 import RandomWord from './components/RandomWord';
-
+import CardList from './components/CardList';
 
 function App() {
 
@@ -12,6 +12,7 @@ function App() {
     <div className="App">
       <Header/>
       <RandomWord/>
+      <CardList/>
       <WordsList/>
       <Footer/>
     </div>

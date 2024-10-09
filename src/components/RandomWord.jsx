@@ -5,7 +5,7 @@ import styles from './randomWord.module.css';
 function RandomWord() {
     const [randomWord, setRandomWord] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [showRussian, setShowRussian] = useState(false); // Состояние для отображения русского слова
+    const [showRussian, setShowRussian] = useState(false); // Состояние для отображения перевода
 
     useEffect(() => {
         const fetchRandomWord = async () => {
@@ -25,7 +25,7 @@ function RandomWord() {
     }, []);
 
     const handleCheck = () => {
-        setShowRussian(true); // Показать русское слово при клике на кнопку
+        setShowRussian(true); // показываем перевод
     };
 
     if (loading) {
