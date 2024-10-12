@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .cardContainer {
@@ -21,7 +22,8 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 30px;
+    font-weight: 600;
     margin: 0 10px;
 }
 
@@ -30,4 +32,10 @@
     border-radius: 10px;
     height: 30px;
     color:rgb(77, 59, 13);
+}
+
+.cardCounter {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px; 
 }

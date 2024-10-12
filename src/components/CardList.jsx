@@ -6,7 +6,7 @@ const CardList = () => {
     const [words, setWords] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [showRussian, setShowRussian] = useState(false); // Состояние для показа перевода
+    const [showRussian, setShowRussian] = useState(false);
 
     useEffect(() => {
         const fetchWords = async () => {
@@ -16,7 +16,7 @@ const CardList = () => {
                 setWords(data);
                 setLoading(false);
             } catch (error) {
-                console.error('Ошибка при получении слов:', error);
+                console.error('ошибка данных:', error);
             }
         };
 
@@ -25,22 +25,22 @@ const CardList = () => {
 
     const nextCard = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-        setShowRussian(false); // Скрыть перевод при переключении
+        setShowRussian(false);
     };
 
     const prevCard = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + words.length) % words.length);
-        setShowRussian(false); 
+        setShowRussian(false);
     };
 
     const handleCheck = () => {
-        setShowRussian(true); // Показать перевод
+        setShowRussian(true);
     };
 
     return (
         <div className={styles.slider}>
             {loading ? (
-                <p>Загрузка...</p>
+                <p>Груууузиииим</p>
             ) : (
                 <div className={styles.cardContainer}>
                     <button onClick={prevCard} className={styles.arrow}>←</button>
@@ -55,6 +55,9 @@ const CardList = () => {
                     <button onClick={nextCard} className={styles.arrow}>→</button>
                 </div>
             )}
+            <div className={styles.cardCounter}>
+                {`${currentIndex + 1} / ${words.length}`}
+            </div>
         </div>
     );
 };
