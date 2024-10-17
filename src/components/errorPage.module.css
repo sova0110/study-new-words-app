@@ -1,0 +1,42 @@
+.errorPage {
+    position: relative;
+    height: 100vh;
+    overflow: hidden; 
+    background-color: grey; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; 
+}
+
+.errorMessage {
+    position: relative;
+    z-index: 1; 
+    font-size: 24px; 
+}
+
+.rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none; 
+}
+
+.raindrop {
+    position: absolute;
+    bottom: 100%; 
+    width: 2px; 
+    background: rgba(255, 255, 255, 0.6); 
+    animation: fall linear infinite; 
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh); 
+    }
+}

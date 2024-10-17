@@ -6,6 +6,11 @@
     font-size: 16px;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 img{
     height: 50px;
@@ -33,4 +38,14 @@ img{
 .button:hover {
     background-color: rgb(192, 192, 192);
     color:darkgoldenrod;
+}
+
+.navLink{
+    text-decoration: none;
+    cursor:pointer;
+    color:darkgoldenrod;
+    font-weight: 500;
+}
+.navLink:hover{
+    color:gray;
 }

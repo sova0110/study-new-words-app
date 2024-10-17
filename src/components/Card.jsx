@@ -7,7 +7,7 @@ function Card(props) {
             <p className={styles.wordTitle}>{props.english}</p>
             <p className={styles.wordText}>{props.russian}</p>
             <p className={styles.wordTransc}>{props.transcription}</p>
-            <p className={styles.wordCategory}>{props.tags}</p>
+            
                         
         </div>
     );

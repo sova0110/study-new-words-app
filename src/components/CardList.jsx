@@ -50,7 +50,7 @@ const CardList = () => {
                             <button onClick={handleCheck} className={styles.handleCheck}>Проверить</button>
                         )}  
                         transcription={words[currentIndex].transcription} 
-                        tags={words[currentIndex].tags} 
+                        
                     />
                     <button onClick={nextCard} className={styles.arrow}>→</button>
                 </div>

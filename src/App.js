@@ -1,21 +1,27 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import WordsList from './components/WordsList';
 import Footer from './components/Footer';
 import RandomWord from './components/RandomWord';
 import CardList from './components/CardList';
+import ErrorPage from './components/errorPage';
 
 function App() {
-
   return (
-    <div className="App">
-      <Header/>
-      <RandomWord/>
-      <CardList/>
-      <WordsList/>
-      <Footer/>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<WordsList />} />
+          <Route path="/random" element={<RandomWord />} />
+          <Route path="/cards" element={<CardList />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
