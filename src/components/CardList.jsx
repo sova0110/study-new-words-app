@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Card from './Card';
 import styles from './cardList.module.css';
 
@@ -7,6 +7,8 @@ const CardList = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [showRussian, setShowRussian] = useState(false);
+    const [learnedCount, setLearnedCount] = useState(0); 
+    const checkButtonRef = useRef(null); 
 
     useEffect(() => {
         const fetchWords = async () => {
@@ -16,7 +18,7 @@ const CardList = () => {
                 setWords(data);
                 setLoading(false);
             } catch (error) {
-                console.error('ошибка данных:', error);
+                console.error('Ошибка данных:', error);
             }
         };
 
@@ -37,6 +39,16 @@ const CardList = () => {
         setShowRussian(true);
     };
 
+    const incrementLearned = () => {
+        setLearnedCount((prevCount) => prevCount + 1); 
+    };
+
+    useEffect(() => {
+        if (checkButtonRef.current && !showRussian) {
+            checkButtonRef.current.focus();
+        }
+    }, [currentIndex]); 
+
     return (
         <div className={styles.slider}>
             {loading ? (
@@ -46,20 +58,24 @@ const CardList = () => {
                     <button onClick={prevCard} className={styles.arrow}>←</button>
                     <Card 
                         english={words[currentIndex].english} 
-                        russian={showRussian ? words[currentIndex].russian : (
-                            <button onClick={handleCheck} className={styles.handleCheck}>Проверить</button>
-                        )}  
+                        russian={showRussian ? words[currentIndex].russian : ''}
                         transcription={words[currentIndex].transcription} 
-                        
+                        showCheckButton={!showRussian}
+                        handleCheck={handleCheck} 
+                        incrementLearned={incrementLearned} 
                     />
                     <button onClick={nextCard} className={styles.arrow}>→</button>
-                </div>
+                    </div>
             )}
             <div className={styles.cardCounter}>
                 {`${currentIndex + 1} / ${words.length}`}
             </div>
+            <div className={styles.learnedCount}>
+                {`Изучено слов: ${learnedCount}`}
+            </div>
         </div>
     );
 };
+    
 
 export default CardList;
