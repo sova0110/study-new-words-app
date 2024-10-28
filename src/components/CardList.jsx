@@ -7,8 +7,8 @@ const CardList = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [showRussian, setShowRussian] = useState(false);
-    const [learnedCount, setLearnedCount] = useState(0); 
-    const checkButtonRef = useRef(null); 
+    const [learnedCount, setLearnedCount] = useState(0);
+    const [learnedWords, setLearnedWords] = useState(new Set()); // состояние по id карточки слова, что бы счетчик увеличивался за сессия только одинтраз при клике на кнопку
 
     useEffect(() => {
         const fetchWords = async () => {
@@ -39,15 +39,12 @@ const CardList = () => {
         setShowRussian(true);
     };
 
-    const incrementLearned = () => {
-        setLearnedCount((prevCount) => prevCount + 1); 
-    };
-
-    useEffect(() => {
-        if (checkButtonRef.current && !showRussian) {
-            checkButtonRef.current.focus();
+    const incrementLearned = (id) => {
+        if (!learnedWords.has(id)) { 
+            setLearnedCount((prevCount) => prevCount + 1);
+            setLearnedWords((prevLearned) => new Set(prevLearned).add(id)); // помещаем id "изученного"(кликнута конопка проверить) слова 
         }
-    }, [currentIndex]); 
+    };
 
     return (
         <div className={styles.slider}>
@@ -57,6 +54,7 @@ const CardList = () => {
                 <div className={styles.cardContainer}>
                     <button onClick={prevCard} className={styles.arrow}>←</button>
                     <Card 
+                        id={words[currentIndex].id} 
                         english={words[currentIndex].english} 
                         russian={showRussian ? words[currentIndex].russian : ''}
                         transcription={words[currentIndex].transcription} 
@@ -65,7 +63,7 @@ const CardList = () => {
                         incrementLearned={incrementLearned} 
                     />
                     <button onClick={nextCard} className={styles.arrow}>→</button>
-                    </div>
+                </div>
             )}
             <div className={styles.cardCounter}>
                 {`${currentIndex + 1} / ${words.length}`}
@@ -76,6 +74,7 @@ const CardList = () => {
         </div>
     );
 };
+
     
 
 export default CardList;
