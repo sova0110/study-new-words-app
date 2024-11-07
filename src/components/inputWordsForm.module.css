@@ -18,7 +18,7 @@
     height: 20px;
 }
 
-.inputWords{
+.inputWords {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: 40px;
@@ -31,4 +31,22 @@
     align-items: center; 
     justify-content: center; 
 
+}
+.errorInput {
+    border: 1px solid red; 
+}
+
+.messages {
+    grid-column: span 5; 
+}
+
+.errorMessages {
+    color: red; 
+    margin-top: 0px;
+    font-size: 10px;
+}
+
+.successMessage {
+    color: green; 
+    margin-top: 10px; 
 }

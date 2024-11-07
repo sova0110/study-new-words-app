@@ -5,9 +5,10 @@ import SearchBar from './SearchInput';
 import InputWordsForm from './InputWordsForm';
  
 
-function WordsList() {
+const WordsList = () => {
     const [words, setWords] = useState([]);
     const [filteredWords, setFilteredWords] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [editingWordId, setEditingWordId] = useState(null);
     const [editedWord, setEditedWord] = useState({});
@@ -19,17 +20,18 @@ function WordsList() {
                 const data = await response.json();
                 setWords(data);
                 setFilteredWords(data);
+                setLoading(false);
             } catch (error) {
-                console.error('не возможно отобразить слово:', error);
+                console.error('Ошибка данных:', error);
             }
         };
 
         fetchWords();
     }, []);
 
-    const categoryFilter = (tag) => {
-        const filtered = words.filter(word => word.tags === tag);
-        setFilteredWords(filtered);
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setEditedWord(prev => ({ ...prev, [name]: value }));
     };
 
     const wordEdit = (id) => {
@@ -43,18 +45,13 @@ function WordsList() {
             word.id === editingWordId ? { ...word, ...editedWord } : word
         );
         setWords(updatedWords);
-        setFilteredWords(updatedWords); // Обновляем также отфильтрованные слова
-        setEditingWordId(null); // Сбросить состояние редактирования
+        setFilteredWords(updatedWords); 
+        setEditingWordId(null); 
     };
 
     const handleCancel = () => {
         setEditingWordId(null);
         setEditedWord({});
-    };
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setEditedWord(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSearchChange = (event) => {
@@ -68,31 +65,44 @@ function WordsList() {
         setFilteredWords(filtered);
     };
 
+    const categoryFilter = (tag) => {
+        const filtered = words.filter(word => word.tags.includes(tag));
+        setFilteredWords(filtered);
+    };
+
     return (
         <div>
             <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
             <Category onFilter={categoryFilter} />
-            <InputWordsForm/>
+            <InputWordsForm />
             <div className="word-list">
-                {filteredWords.map(word => (
-                    <Word 
-                        key={word.id} 
-                        english={editingWordId === word.id ? editedWord.english : word.english} 
-                        russian={editingWordId === word.id ? editedWord.russian : word.russian} 
-                        transcription={editingWordId === word.id ? editedWord.transcription : word.transcription} 
-                        tags={editingWordId === word.id ? editedWord.tags : word.tags} 
-                        showButtons={true}
-                        editBtn={() => wordEdit(word.id)}
-                        saveBtn={handleSave}
-                        cancelBtn={handleCancel}
-                        handleInputChange={handleInputChange}
-                        isEditing={editingWordId === word.id}
-                    />
-                ))}
+                {loading ? (
+                    <p>Загрузка...</p>
+                ) : (
+                    filteredWords.map(word => (
+                        <Word 
+                            key={word.id} 
+                            english={editingWordId === word.id ? editedWord.english : word.english} 
+                            russian={editingWordId === word.id ? editedWord.russian : word.russian} 
+                            transcription={editingWordId === word.id ? editedWord.transcription : word.transcription} 
+                            tags={editingWordId === word.id ? editedWord.tags : word.tags} 
+                            showButtons={true}
+                            editBtn={() => wordEdit(word.id)}
+                            saveBtn={handleSave}
+                            cancelBtn={handleCancel}
+                            handleInputChange={handleInputChange}
+                            isEditing={editingWordId === word.id}
+                            isEnglishEmpty={editedWord.english === ''} 
+                            isRussianEmpty={editedWord.russian === ''} 
+                            isTranscriptionEmpty={editedWord.transcription === ''} 
+                            isTagsEmpty={editedWord.tags === ''} 
+                        />
+                    ))
+                )}
             </div>
         </div>
     );
-}
+};
 
 export default WordsList;
 
