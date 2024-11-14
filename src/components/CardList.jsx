@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Card from './Card';
+import LoadingIndicator from './LoadingIndicator';
 import styles from './cardList.module.css';
 
 const CardList = () => {
@@ -42,14 +43,14 @@ const CardList = () => {
     const incrementLearned = (id) => {
         if (!learnedWords.has(id)) { 
             setLearnedCount((prevCount) => prevCount + 1);
-            setLearnedWords((prevLearned) => new Set(prevLearned).add(id)); // помещаем id "изученного"(кликнута конопка проверить) слова 
+            setLearnedWords((prevLearned) => new Set(prevLearned).add(id)); 
         }
     };
 
     return (
         <div className={styles.slider}>
             {loading ? (
-                <p>Груууузиииим</p>
+                <LoadingIndicator />
             ) : (
                 <div className={styles.cardContainer}>
                     <button onClick={prevCard} className={styles.arrow}>←</button>

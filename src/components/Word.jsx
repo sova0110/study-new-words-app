@@ -35,16 +35,27 @@ function Word(props) {
                             onChange={props.handleInputChange} 
                             className={props.isTagsEmpty ? styles.errorInput : ''} 
                         />
+                        {/* Скрытые поля для id и tags_json */}
+                        <input 
+                            type="hidden" 
+                            name="id" 
+                            value={props.id} 
+                        />
+                        <input 
+                            type="hidden" 
+                            name="tags_json" 
+                            value={props.tags_json} 
+                        />
                         <div className='changeBtn'>
                             <button 
                                 className={styles.saveBtn} 
                                 onClick={props.saveBtn} 
                                 disabled={props.isEnglishEmpty || props.isRussianEmpty || props.isTranscriptionEmpty || props.isTagsEmpty} // Блокировка кнопки
                             >
-                                <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/262/PNG/64/checkmark_29376.png" />
+                                <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/262/PNG/64/checkmark_29376.png" alt="Сохранить" />
                             </button>
                             <button className={styles.cancelBtn} onClick={props.cancelBtn}>
-                                <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/55/PNG/128/Pincancellation_11230.png" />
+                                <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/55/PNG/128/Pincancellation_11230.png" alt="Отмена" />
                             </button>
                         </div>
                     </>
@@ -57,10 +68,10 @@ function Word(props) {
                         {props.showButtons && (
                             <div className={styles.allButtons}>
                                 <button className={styles.editBtn} onClick={props.editBtn}>
-                                    <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/1572/PNG/512/3592869-compose-create-edit-edit-file-office-pencil-writing-creative_107746.png" />
+                                <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/1572/PNG/512/3592869-compose-create-edit-edit-file-office-pencil-writing-creative_107746.png" alt="Редактировать" />
                                 </button>
                                 <button className={styles.deleteBtn} onClick={() => props.deleteBtn(props.id)}>
-                                    <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/1150/PNG/512/1486504830-delete-dustbin-empty-recycle-recycling-remove-trash_81361.png" />
+                                    <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/1150/PNG/512/1486504830-delete-dustbin-empty-recycle-recycling-remove-trash_81361.png" alt="Удалить"/>
                                 </button>
                             </div>
                         )}
@@ -70,5 +81,5 @@ function Word(props) {
         </div>
     );
 }
-
+ 
 export default Word;

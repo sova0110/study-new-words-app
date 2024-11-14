@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import RandomWord from './components/RandomWord';
 import CardList from './components/CardList';
 import ErrorPage from './components/errorPage';
+import LoadingIndicator from './components/LoadingIndicator';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/random" element={<RandomWord />} />
           <Route path="/cards" element={<CardList />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/load" element={<LoadingIndicator />} />
         </Routes>
         <Footer />
       </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Word from './Word';
+import LoadingIndicator from './LoadingIndicator';
 import styles from './randomWord.module.css';
 
 function RandomWord() {
@@ -29,7 +30,7 @@ function RandomWord() {
     };
 
     if (loading) {
-        return <div>Груууузим</div>;
+        return <LoadingIndicator />;
     }
 
     return (
