@@ -1,0 +1,37 @@
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.categoryButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.catgoryButton {
+    padding: 10px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.categoryButton:hover {
+    background-color: #e0e0e0;
+}
+
+.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.clearFilterButton {
+    padding: 10px;
+    border: none;
+    background-color: #ff4d4d;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}

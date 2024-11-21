@@ -14,7 +14,6 @@ function Header() {
                 </div>
             </Link>
             <Link to="/" className={styles.navLink}>Главная</Link>
-            <Link to="/random" className={styles.navLink}>Слово дня</Link>
             <Link to="/cards" className={styles.navLink}>Карточки</Link>
             {User ? (
                 <button className={styles.Logout}>Выйти</button>

@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
 import styles from './inputWordsForm.module.css';
+import { observer } from 'mobx-react';
+import Word from './Word';
+import  wordStore  from '../store/wordStore';
 
-function InputWordsForm() {
+const InputWordsForm = observer(() => {
     const [english, setEnglish] = useState('');
     const [translation, setTranslation] = useState('');
     const [transcription, setTranscription] = useState('');
     const [category, setCategory] = useState('');
-    const [errors, setErrors] = useState({}); 
-    const [successMessage, setSuccessMessage] = useState(''); 
-    const handleSave = () => {
+    const [errors, setErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const handleSave = async () => {
         const newErrors = {};
-        const latinRegex = /^[A-Za-z\s\[\]'\`:,.\/|~^@æaðɔʒʌəʧθ]*$/; 
-        const russianRegex = /^[А-Яа-яёЁ\s]*$/; 
+        const latinRegex = /^[A-Za-z\s\[\]'\`:,.\/|~^@æaðɔʒʌəʧθ]*$/;
+        const russianRegex = /^[А-Яа-яёЁ\s]*$/;
 
         if (english.trim() === '') {
             newErrors.english = 'Поле не должно быть пустым.';
@@ -40,14 +44,22 @@ function InputWordsForm() {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            console.log('Данные успешно сохранены:', { english, translation, transcription, category });
+            const newWord = {
+                english,
+                russian: translation, // Сохраняем перевод в поле russian
+                transcription,
+                category, // Используем поле category как тег
+                tags_json: [], // Поле tags_json остается пустым
+            };
+
+            await wordStore.addWord(newWord);
             setSuccessMessage('Слово успешно сохранено!');
             setEnglish('');
             setTranslation('');
             setTranscription('');
             setCategory('');
         } else {
-            setSuccessMessage(''); 
+            setSuccessMessage('');
         }
     };
 
@@ -80,13 +92,13 @@ function InputWordsForm() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className={errors.category ? styles.errorInput : ''} 
-                />
-                <div className={styles.allButtons}>
-                    <button 
-                        className={styles.saveBtn} 
-                        type="button" 
-                        onClick={handleSave}
-                        disabled={english.trim() === '' || translation.trim() === '' || transcription.trim() === '' || category.trim() === ''} // Блокировка кнопки только при пустых полях
+            />
+            <div className={styles.allButtons}>
+                <button 
+                    className={styles.saveBtn} 
+                    type="button" 
+                    onClick={handleSave}
+                    disabled={english.trim() === '' || translation.trim() === '' || transcription.trim() === '' || category.trim() === ''}
                     >
                         <img className={styles.imgBtn} src="https://cdn.icon-icons.com/icons2/262/PNG/64/checkmark_29376.png" alt="Сохранить" />
                     </button>
@@ -104,5 +116,5 @@ function InputWordsForm() {
                 {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
             </div>
         );
-    }
+    });
 export default InputWordsForm;

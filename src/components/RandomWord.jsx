@@ -1,61 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Word from './Word';
 import styles from './randomWord.module.css';
+import wordStore from '../store/wordStore';
+import { observer } from 'mobx-react';
 
-function RandomWord() {
+const RandomWord = observer(() => {
     const [randomWord, setRandomWord] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [showRussian, setShowRussian] = useState(false); // Состояние для отображения перевода
 
     useEffect(() => {
-        const fetchRandomWord = async () => {
+        const fetchWords = async () => {
             try {
                 const response = await fetch('https://itgirlschool.justmakeit.ru/api/words');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 const data = await response.json();
+
+                // Проверка структуры данных
+                console.log('Fetched words:', data);
+
+                // Добавляем слова в wordStore
+                data.forEach(word => wordStore.addWord(word));
+
+                // Устанавливаем случайное слово из полученных данных
                 const randomIndex = Math.floor(Math.random() * data.length);
-                setRandomWord(data[randomIndex]);
+                setRandomWord(data[randomIndex] || null); // Убедитесь, что randomWord не null
             } catch (error) {
-                console.error('что-то пошло не так:', error);
-            } finally {
-                setLoading(false);
+                console.error('Error fetching words:', error);
             }
         };
 
-        fetchRandomWord();
+        fetchWords();
     }, []);
 
     const handleCheck = () => {
-        setShowRussian(true); // показываем перевод
+        setShowRussian(true); // Показываем перевод
     };
-
-    if (loading) {
-        return <div>Груууузим</div>;
-    }
 
     return (
         <div className={styles.randomWordContainer}>
             <p>Слово дня!</p>
             <p>New day - new word</p>
-            {randomWord && (
+            {randomWord ? (
                 <div className='wordCard'>
-                <Word 
-                    key={randomWord.id} 
-                    english={randomWord.english} 
-                    russian={showRussian ? randomWord.russian : (
-                        <button onClick={handleCheck} className={styles.handleCheck}>Проверить</button>
-                    )} 
-                    transcription={<span className={styles.wordTranscR}>{randomWord.transcription}</span>} 
-                    tags={randomWord.tags} 
-                    showButtons={false}  
-                    customClass={styles.randomWordTable} 
-                    noBorder={true} 
-                />
+                    <Word 
+                        key={randomWord.id} 
+                        english={randomWord.english || "Неизвестно"} 
+                        russian={showRussian ? randomWord.russian || "Неизвестно" : (
+                            <button onClick={handleCheck} className={styles.handleCheck}>Проверить</button>
+                        )} 
+                        transcription={<span className={styles.wordTranscR}>{randomWord.transcription || "Неизвестно"}</span>} 
+                        tags={randomWord.tags || []} // Используйте пустой массив, если tags отсутствуют
+                        showButtons={false}  
+                        customClass={styles.randomWordTable} 
+                        noBorder={true} 
+                    />
                 </div>
+            ) : (
+                <div>Груууузим</div>
             )}
             <p>Запомни его!</p>
         </div>
     );
-}
+});
 
 export default RandomWord;
 
