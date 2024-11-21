@@ -49,7 +49,7 @@ class WordStore {
         this.isEditing = true;
     }
 
-    saveWord = async () => { // Make saveWord an arrow function
+    saveWord = async () => { 
         if (this.currentWord) {
             const response = await fetch(`https://itgirlschool.justmakeit.ru/api/words/${this.currentWord.id}/update`, {
                 method: 'POST',
@@ -68,7 +68,7 @@ class WordStore {
         }
     }
 
-    async deleteWord(wordId) { // Method to delete a word by ID
+    async deleteWord(wordId) { 
         const response = await fetch(`https://itgirlschool.justmakeit.ru/api/words/${wordId}/delete`, {
             method: 'POST',
             headers: {
@@ -77,7 +77,7 @@ class WordStore {
         });
 
         if (response.ok) {
-            await this.fetchWords(); // Refresh the word list after deletion
+            await this.fetchWords(); 
         } else {
             console.error('Ошибка при удалении данных');
         }
@@ -111,6 +111,7 @@ class WordStore {
 }
 
 const wordStore = new WordStore();
+
 export default wordStore;
 
 

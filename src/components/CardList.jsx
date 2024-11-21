@@ -1,80 +1,44 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Card from './Card';
+import LoadingIndicator from './LoadingIndicator';
 import styles from './cardList.module.css';
+import { observer } from 'mobx-react';
+import cardStore from '../store/cardStore';
 
-const CardList = () => {
-    const [words, setWords] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [showRussian, setShowRussian] = useState(false);
-    const [learnedCount, setLearnedCount] = useState(0);
-    const [learnedWords, setLearnedWords] = useState(new Set()); // состояние по id карточки слова, что бы счетчик увеличивался за сессия только одинтраз при клике на кнопку
-
+const CardList = observer(() => {
     useEffect(() => {
-        const fetchWords = async () => {
-            try {
-                const response = await fetch('https://itgirlschool.justmakeit.ru/api/words');
-                const data = await response.json();
-                setWords(data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Ошибка данных:', error);
-            }
-        };
-
-        fetchWords();
+        cardStore.fetchWords();
     }, []);
 
-    const nextCard = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-        setShowRussian(false);
-    };
-
-    const prevCard = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + words.length) % words.length);
-        setShowRussian(false);
-    };
-
-    const handleCheck = () => {
-        setShowRussian(true);
-    };
-
-    const incrementLearned = (id) => {
-        if (!learnedWords.has(id)) { 
-            setLearnedCount((prevCount) => prevCount + 1);
-            setLearnedWords((prevLearned) => new Set(prevLearned).add(id)); // помещаем id "изученного"(кликнута конопка проверить) слова 
-        }
-    };
+    const { loading, currentWord, showRussian, currentIndex, learnedCount } = cardStore;
 
     return (
         <div className={styles.slider}>
             {loading ? (
-                <p>Груууузиииим</p>
+                <LoadingIndicator />
             ) : (
                 <div className={styles.cardContainer}>
-                    <button onClick={prevCard} className={styles.arrow}>←</button>
+                    <button onClick={() => cardStore.prevCard()} className={styles.arrow}>←</button>
                     <Card 
-                        id={words[currentIndex].id} 
-                        english={words[currentIndex].english} 
-                        russian={showRussian ? words[currentIndex].russian : ''}
-                        transcription={words[currentIndex].transcription} 
+                        id={currentWord.id} 
+                        english={currentWord.english} 
+                        russian={showRussian ? currentWord.russian : ''}
+                        transcription={currentWord.transcription} 
                         showCheckButton={!showRussian}
-                        handleCheck={handleCheck} 
-                        incrementLearned={incrementLearned} 
+                        handleCheck={() => cardStore.handleCheck()} 
+                        incrementLearned={(id) => cardStore.incrementLearned(id)} 
                     />
-                    <button onClick={nextCard} className={styles.arrow}>→</button>
+                    <button onClick={() => cardStore.nextCard()} className={styles.arrow}>→</button>
                 </div>
             )}
             <div className={styles.cardCounter}>
-                {`${currentIndex + 1} / ${words.length}`}
+                {`${currentIndex + 1} / ${cardStore.words.length}`}
             </div>
             <div className={styles.learnedCount}>
                 {`Изучено слов: ${learnedCount}`}
             </div>
         </div>
     );
-};
-
-    
+});
 
 export default CardList;

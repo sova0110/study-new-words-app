@@ -6,7 +6,7 @@ function Card(props) {
 
     useEffect(() => {
         if (checkButtonRef.current && props.showCheckButton) {
-            checkButtonRef.current.focus(); //  фокус на кнопку при отображении
+            checkButtonRef.current.focus(); 
         }
     }, [props.showCheckButton]);
 
@@ -20,7 +20,7 @@ function Card(props) {
                     ref={checkButtonRef} 
                     onClick={() => {
                         props.handleCheck(); 
-                        props.incrementLearned(props.id); // передаем ID слова для увеличения счетчика
+                        props.incrementLearned(props.id); 
                     }} 
                     className={styles.handleCheck}
                 >
@@ -30,5 +30,4 @@ function Card(props) {
         </div>
     );
 }
-
 export default Card

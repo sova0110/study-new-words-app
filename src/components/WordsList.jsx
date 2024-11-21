@@ -3,9 +3,8 @@ import mobx from 'mobx'
 import { observer } from 'mobx-react';
 import Word from './Word';
 import  wordStore  from '../store/wordStore';
-import Category from './Category';
-import SearchBar from './SearchInput';
 import InputWordsForm from './InputWordsForm';
+import LoadingIndicator from './LoadingIndicator';
 
 
 @observer
@@ -33,13 +32,12 @@ class WordsList extends Component {
         const { words, loading } = wordStore;
 
         if (loading) {
-            return <div>Loading...</div>;
+            return <div><LoadingIndicator /></div>;
         }
 
         return (
             
             <div>
-                <Category onFilter={this.categoryFilter} />
                  <InputWordsForm onAdd={this.handleAdd} />
                 {words.map(word => (
                     <Word key={word.id} word={word} />
