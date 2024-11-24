@@ -35,3 +35,11 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.searchInput{
+    width: 70vw;
+    height: 40px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgb(244, 232, 203);
+    margin-top: 30px;
+}

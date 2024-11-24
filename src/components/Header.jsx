@@ -15,6 +15,7 @@ function Header() {
             </Link>
             <Link to="/" className={styles.navLink}>Главная</Link>
             <Link to="/cards" className={styles.navLink}>Карточки</Link>
+            <Link to="/random_card" className={styles.navLink}>слово дня</Link>
             {User ? (
                 <button className={styles.Logout}>Выйти</button>
             ) : (

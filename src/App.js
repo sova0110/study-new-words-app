@@ -5,10 +5,10 @@ import { Provider } from 'mobx-react';
 import Header from './components/Header';
 import WordsList from './components/WordsList';
 import Footer from './components/Footer';
-import RandomWord from './components/RandomWord';
 import CardList from './components/CardList';
 import ErrorPage from './components/errorPage';
 import wordStore from './store/wordStore';
+import RandomCard from './components/RandomCard';
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<WordsList />} />
             <Route path="/cards" element={<CardList />} />
+            <Route path="/random_card" element={<RandomCard />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />

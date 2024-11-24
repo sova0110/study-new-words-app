@@ -47,6 +47,12 @@ class CardStore {
     get currentWord() {
         return this.words[this.currentIndex];
     }
+
+    getRandomWord() {
+        if (this.words.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * this.words.length);
+        return this.words[randomIndex];
+    }
 }
 
 
